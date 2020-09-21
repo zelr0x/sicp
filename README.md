@@ -1,5 +1,20 @@
 # SICP
 
+## Running code
+### Racket
+Example scheme program at `./test.scm`:
+```scheme
+(define (square x)
+  (* x x))
+
+(display (square 5))
+```
+Run it:
+```bash
+racket -I r5rs --script ./test.scm
+# -> 25
+```
+
 ## Applicative order versus normal order
 https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-4.html#%_toc_%_sec_Temp_22
 
