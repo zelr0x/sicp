@@ -14,6 +14,10 @@ Run it:
 racket -I r5rs --script ./test.scm
 # -> 25
 ```
+#### REPL
+```bash
+racket -iI r5rs
+```
 
 ## Applicative order versus normal order
 https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-4.html#%_toc_%_sec_Temp_22
