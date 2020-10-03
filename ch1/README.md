@@ -51,7 +51,7 @@ Second procedure generates an iterative process.
 ;; 9
 ```
 
-# 1.10
+### 1.10
 ```scheme
 (define (A x y)
   (cond ((= y 0) 0)
@@ -116,14 +116,14 @@ O(*2ⁿ*)
 ```
 O(*2<sup>2ⁿ</sup>*)
 
-## 1.14
+### 1.14
 a: amount
 k: coin-kinds
 
 Space: O(*a*)
 Time: O(*a<sup>k</sup>*)
 
-## 1.15
+### 1.15
 ```scheme
 (define (cube x) (* x x x))
 (define (p x) (- (* 3 x) (* 4 (cube x))))
@@ -145,4 +145,3 @@ a. How many times is p applied: 6 including initial invokation, 5 otherwise:
 b. Growth as a function of a (angle):
 Space: O(*a*)
 Time: O(log₃ *a*)
-
