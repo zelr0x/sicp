@@ -145,3 +145,31 @@ a. How many times is p applied: 6 including initial invokation, 5 otherwise:
 b. Growth as a function of a (angle):
 Space: O(*a*)
 Time: O(log₃ *a*)
+
+### 1.20
+```scheme
+(define (gcd a b)
+  (if (= b 0)
+      a
+      (gcd b (remainder a b))))
+
+(gcd 206 40)
+```
+
+#### Normal order
+```scheme
+(gcd 40 6)
+(gcd 6 4)
+(gcd 4 2)
+2
+```
+There are three calls to `remainder` and all of them are successful.
+
+#### Applicative order
+```scheme
+(gcd 40 6)
+(gcd 6 4)
+(gcd 4 2)
+; remainder: undefined for 0
+```
+There are 4 calls to `remainder`: the first three are successful, but the last one requires division by zero.
