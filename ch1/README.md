@@ -173,3 +173,9 @@ There are three calls to `remainder` and all of them are successful.
 ; remainder: undefined for 0
 ```
 There are 4 calls to `remainder`: the first three are successful, but the last one requires division by zero.
+
+### 1.21
+(smallest-divisor 199)    ; 199
+(smallest-divisor 1999)   ; 1999
+(smallest-divisor 19999)  ; 7
+
