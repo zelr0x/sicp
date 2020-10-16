@@ -179,3 +179,14 @@ There are 4 calls to `remainder`: the first three are successful, but the last o
 (smallest-divisor 1999)   ; 1999
 (smallest-divisor 19999)  ; 7
 
+### 1.23
+Added `if` expression likely introduced extra branching.
+It makes the ratio of the speeds of two algorithms to be less than 2.
+
+### 1.24
+It is expected that for a number X, test will be twice as fast as for a number with twice as many digits.
+However, modern machines don't allow testing it properly, since testing small numbers takes less than a millisecond.
+
+r5rs `random` function doesn't work with numbers greater than `2^32 - 1`.
+However, even if it did, it wouldn't be a clear test, since operations on 128-bit integers
+are not as fast as operations on 32- or 64-bit integers (that is, on a generic x64 machine).
