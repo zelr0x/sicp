@@ -190,3 +190,34 @@ However, modern machines don't allow testing it properly, since testing small nu
 r5rs `random` function doesn't work with numbers greater than `2^32 - 1`.
 However, even if it did, it wouldn't be a clear test, since operations on 128-bit integers
 are not as fast as operations on 32- or 64-bit integers (that is, on a generic x64 machine).
+
+### 1.25
+Procedure `fast-expt` involves recursively computing the square of a number. It results in a chain of deferred computations of `square` procedure, which can produce very large results, because the arguments passed to it are the results of `fast-expt`, i.e. exponentiated numbers:
+```scheme
+(define (fast-expt b n)
+  (cond ((= n 0) 1)
+        ((even? n) (square (fast-expt b (/ n 2))))
+        (else (* b (fast-expt b (- n 1))))))
+
+(define (expmod base exp m)
+  (remainder (fast-expt base exp) m))
+```
+
+Original version of `expmod` looks similar at first glance, but the difference is crucial. It also produces deferred computations of `square`, but it doesn't compute squares of such large numbers. The reason is, the arguments passed to `square` are the results of `expmod`, i.e. numbers modulo m:
+```scheme
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square (expmod base (/ exp 2) m)) m))
+        (else
+         (remainder (* base (expmod base (- exp 1) m)) m))))
+```
+
+Now, let's remember how `fermat-test` looks:
+```scheme
+(define (fermat-test n)
+  (define (try-it a)
+    (= (expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))
+```
+If we use the `fast-expt` version, the base argument of `fast-expt` will be the random number between 2 and `n` and the exponent will be `n`. With such arguments, the final result of `square` will exceed native word size of modern machines well before we even hit the first 3-digit `n`. Since operating  numbers exceeding native word size is relatively slow, the `fast-expt` version is slower than the original version.
