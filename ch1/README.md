@@ -223,3 +223,22 @@ Now, let's remember how `fermat-test` looks:
   (try-it (+ 1 (random (- n 1)))))
 ```
 If we use the `fast-expt` version, the base argument of `fast-expt` will be the random number between 2 and `n` and the exponent will be `n`. With such arguments, the final result of `square` will exceed native word size of modern machines well before we even hit the first 3-digit `n`. Since operating  numbers exceeding native word size is relatively slow, the `fast-expt` version is slower than the original version.
+
+### 1.26
+Louis changed expression
+```scheme
+((even? exp)
+ (remainder (square (expmod base (/ exp 2) m)) m))
+```
+to
+```scheme
+((even? exp)
+ (remainder (* (expmod base (/ exp 2) m)
+               (expmod base (/ exp 2) m))
+            m))
+```
+The crucial difference here is that expression
+```scheme
+(expmod base (/ exp 2) m)
+```
+is evaluated twice in the Louis's version and only once in the normal version, because lisp interpreters usually use applicative order evaluation for procedure arguments.
