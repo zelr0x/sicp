@@ -241,4 +241,4 @@ The crucial difference here is that expression
 ```scheme
 (expmod base (/ exp 2) m)
 ```
-is evaluated twice in the Louis's version and only once in the normal version, because lisp interpreters usually use applicative order evaluation for procedure arguments.
+is evaluated twice in the Louis's version and only once in the normal version, because lisp interpreters usually use applicative order evaluation for procedure arguments. This extra evaluation is recursive and it makes the `expmod` function generate tree recursive process instead of linear recursive process.
