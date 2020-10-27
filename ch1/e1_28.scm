@@ -1,0 +1,46 @@
+(#%require (only racket/base random))
+
+(define (square x) (* x x))
+(define (dec x) (- x 1))
+
+(define (expmod base exp m)
+  (define (square-mod x)
+    (define (nontrivial-sqrt1 sq)
+      (if (and (= sq 1)
+               (not (= sq 1))
+               (not (= sq (dec x))))
+        0
+        sq))
+    (nontrivial-sqrt1 (remainder (square x) m)))
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square-mod (expmod base (/ exp 2) m)) m))
+        (else
+         (remainder (* base (expmod base (dec exp) m)) m))))
+
+(define (miller-rabin-test n)
+  (define (try-it a)
+    (define (test x) (and (not (= x 0)) (= x 1)))
+    (test (expmod a (dec n) n)))
+  (try-it (+ 1 (random (dec n)))))
+
+(define (fast-prime? n times)
+  (cond ((= times 0) #t)
+        ((miller-rabin-test n) (fast-prime? n (dec times)))
+        (else #f)))
+
+(display (fast-prime? 11 2))
+(newline)
+(display (fast-prime? 561 10))
+(newline)
+(display (fast-prime? 1105 20))
+(newline)
+(display (fast-prime? 1729 30))
+(newline)
+(display (fast-prime? 2465 40))
+(newline)
+(display (fast-prime? 2821 50))
+(newline)
+(display (fast-prime? 6601 75))
+(newline)
+
