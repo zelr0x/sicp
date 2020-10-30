@@ -31,6 +31,23 @@ For procedure applications that can be modeled using substitution and that yield
 If an expression terminates in CBV evaluation, it also terminates in CBN evaluation. It is NOT true for the opposite direction: CBN termination doesn't imply CBV termination.
 
 
+## `let` scope
+```scheme
+(let ((x 2))
+  (let ((x 3)
+        (y (+ x 2)))
+    (* x y)))
+;; => 12, because when y is evaluated, x is still 2.
+```
+In clojure, the result is 15:
+```clojure
+(let [x 2] 
+  (let [x 3
+        y (+ x 2)]
+    (* x y)))
+;; => 15, because [x 3] shadows [x 2] when y is evaluated.
+```
+
 ## Terminology
 *Recursive procedure* - a procedure that has the call to itself in its definition.
 
