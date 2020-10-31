@@ -242,3 +242,23 @@ The crucial difference here is that expression
 (expmod base (/ exp 2) m)
 ```
 is evaluated twice in the Louis's version and only once in the normal version, because lisp interpreters usually use applicative order evaluation for procedure arguments. This extra evaluation is recursive and it makes the `expmod` function generate tree recursive process instead of linear recursive process.
+
+### 1.34
+```scheme
+(define (f g) (g 2))
+
+(f f)
+```
+When interpreter evaluates the expression `(f f)`, the following expression is bound to `g`:
+```scheme
+(lambda (x) (x 2))
+```
+That results in the following expression in the body of `f`:
+```scheme
+((lambda (x) (x 2)) 2)
+```
+When the body is evaluated, `2` is bound to `x`, which results in:
+```scheme
+(2 2)
+```
+Since `2` is not a procedure, the interpreter can't evaluate this expression.
