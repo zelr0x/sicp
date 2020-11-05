@@ -262,3 +262,20 @@ When the body is evaluated, `2` is bound to `x`, which results in:
 (2 2)
 ```
 Since `2` is not a procedure, the interpreter can't evaluate this expression.
+
+### 1.41
+```scheme
+(define (inc x) (+ x 1))
+(define (double f)
+  (lambda (x) (f (f x))))
+
+(((double (double double)) inc) 5)
+```
+
+The result is the function that the given value 16 times.
+```scheme
+(double (double double) f)
+(double (lambda (x) (double (double x))))
+(lambda (x) (double (double (double (double x)))))
+(inc (inc (inc (inc (inc (inc (inc (inc (inc (inc (inc (inc (inc (inc (inc (inc 5))))))))))))))))
+```
