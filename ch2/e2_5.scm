@@ -1,0 +1,21 @@
+(define (inc x) (+ x 1))
+
+(define (cons a b)
+  (* (expt 2 a) (expt 3 b)))
+(define (count-even-div pair div)
+  (define (iter acc n)
+    (let ((q (floor (/ n div))))
+      (if (= (* q div) n)
+        (iter (inc acc) q)
+        acc)))
+  (iter 0 pair))
+(define (car pair)
+  (count-even-div pair 2))
+(define (cdr pair)
+  (count-even-div pair 3))
+
+(define p (cons 7 18))
+(display (car p))
+(newline)
+(display (cdr p))
+
