@@ -1,11 +1,14 @@
+;; 2.7
 (define (make-interval x y) (cons x y))
 (define (lower-bound z) (car z))
 (define (upper-bound z) (cdr z))
 
+;; Example
 (define (add-interval x y)
   (make-interval (+ (lower-bound x) (lower-bound y))
                  (+ (upper-bound x) (upper-bound y))))
 
+;; 2.8
 (define (sub-interval x y)
   (make-interval (- (lower-bound x) (lower-bound y))
                  (- (upper-bound x) (upper-bound y))))
@@ -24,6 +27,7 @@
     (make-interval (/ 1.0 (upper-bound y))
                    (/ 1.0 (lower-bound y)))))
 
+;; 2.9
 (define (width z)
   (abs (/ (- (upper-bound z) (lower-bound z)) 2)))
 
