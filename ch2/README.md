@@ -110,3 +110,24 @@ With this procedure:
 (cons x y)   ;; ((1 2 3) 4 5 6)
 (list x y)   ;; ((1 2 3) (4 5 6))
 ```
+
+### 2.32
+
+Each subset of `s` is a first item of `s` consed with each subset of `cdr` of `s` and all that appended to a list containing
+all the subsets of cdr of s.
+
+If `s` is empty, returns empty list (representing an empty set).
+
+If `s` contains one element, returns a set of that element and all subsets of its `cdr` i.e. an empty set.
+This works because `(append '() '(5))` produces `(5)` and not `(5 '())`
+
+If `s` contains two elements, returns a list of the first element added to each subset of its `cdr`, which is explained in the case above, appended to a list of all subsets of its `cdr`, including an empty set.
+```scheme
+(define (subsets s)
+  (if (null? s)
+    '(())
+    (let ((rest (subsets (cdr s))))
+      (append rest (map (lambda (x) (cons (car s) x)) rest)))))
+
+(display (subsets '(1 2 3))) ;; (() (3) (2) (2 3) (1) (1 3) (1 2) (1 2 3))
+```
