@@ -18,6 +18,8 @@ racket -I r5rs --script ./test.scm
 ```bash
 racket -iI r5rs
 ```
+#### cmder alias
+scheme=if [$1]==[] (racket -iI r5rs) else (racket -I r5rs --script $1 $*)
 
 ## Applicative order versus normal order
 https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-4.html#%_toc_%_sec_Temp_22
