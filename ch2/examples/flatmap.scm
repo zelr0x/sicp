@@ -1,0 +1,53 @@
+(#%require (only rnrs/lists-6 remove))
+
+(define (filter predicate sequence)
+  (cond ((null? sequence) '())
+        ((predicate (car sequence))
+         (cons (car sequence)
+               (filter predicate (cdr sequence))))
+        (else (filter predicate (cdr sequence)))))
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+    initial
+    (op (car sequence)
+        (accumulate op initial (cdr sequence)))))
+(define (flatmap proc seq)
+  (accumulate append '() (map proc seq)))
+(define (enumerate-interval low high)
+  (if (> low high)
+    '()
+    (cons low (enumerate-interval (+ low 1) high))))
+
+(define (square x) (* x x))
+(define (divides? a b) (= (remainder b a) 0))
+(define (smallest-divisor n)
+  (define (find-divisor test-divisor) 
+    (cond ((> (square test-divisor) n) n)
+          ((divides? test-divisor n) test-divisor)
+          (else (find-divisor (+ test-divisor 1)))))
+  (find-divisor 2))
+(define (prime? n)
+  (= n (smallest-divisor n)))
+(define (prime-sum? pair)
+  (prime? (+ (car pair) (cadr pair))))
+(define (make-pair-sum pair)
+  (list (car pair) (cadr pair) (+ (car pair) (cadr pair))))
+(define (prime-sum-pairs n)
+  (map make-pair-sum
+       (filter prime-sum? (flatmap
+                            (lambda (i)
+                              (map (lambda (j) (list i j))
+                                   (enumerate-interval 1 (- i 1))))
+                            (enumerate-interval 1 n)))))
+(define (permutations s)
+  (if (null? s) ; empty set?
+    (list '())  ; sequence containing empty set
+    (flatmap (lambda (x)
+               (map (lambda (p) (cons x p))
+                    (permutations (remove x s))))
+             s)))
+
+(display (prime-sum-pairs 6))
+(newline)
+(display (permutations '(1 2 3)))
+
