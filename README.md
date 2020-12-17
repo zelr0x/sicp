@@ -18,6 +18,21 @@ racket -I r5rs --script ./test.scm
 ```bash
 racket -iI r5rs
 ```
+#### Running SICP-specific code
+Some examples and exercises like the ones in chapter 2 can be ran with the help of the `sicp` package.
+To install in in DrRacket go to `File > Install Package`, in the `package source` field type sicp.
+
+To enable sicp language, add sicp-specific `lang` directive to the top of the file.
+```scheme
+#lang sicp
+```
+There can be only one such directive per file.
+
+Use `require` to introduce some module, e.g. `sicp-pict`, to the working namespace:
+```scheme
+(#%require sicp-pict)
+```
+
 #### cmder alias
 scheme=if [$1]==[] (racket -iI r5rs) else (racket -I r5rs --script $1 $*)
 
