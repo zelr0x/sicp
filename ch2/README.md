@@ -157,3 +157,15 @@ If `s` contains two elements, returns a list of the first element added to each 
 A property that op should satisfy to guarantee that
 fold-right and fold-left will produce the same values
 for any sequence is __associativity__.
+
+### 2.54
+```scheme
+(list 'a 'b 'c)  ;; {a b c}
+(list (list 'george))  ;; {{george}}
+(cdr '((x1 x2) (y1 y2)))  ;; {{y1 y2}}
+(cadr '((x1 x2) (y1 y2)))  ;; {y1 y2}   (car '((y1 y2)))
+(pair? (car '(a short list)))  ;; #f    (pair? 'a)
+(memq 'red '((red shoes) (blue socks)))  ;; #f  (because memq is not tree-recursive)
+(memq 'red '(red shoes blue socks))      ;; {red shoes blue socks}
+```
+
