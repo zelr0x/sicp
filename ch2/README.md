@@ -169,3 +169,12 @@ for any sequence is __associativity__.
 (memq 'red '(red shoes blue socks))      ;; {red shoes blue socks}
 ```
 
+### 2.55
+```scheme
+(car ''abracadabra)  
+;; is the same as
+(car (quote (quote abracadabra)))
+;; (quote (quote x)) is just '(quote x)
+;; second `quote` is not evaluated because of the first one.
+;; so car of that is just the word `quote`.
+
