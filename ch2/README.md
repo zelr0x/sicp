@@ -158,7 +158,7 @@ A property that op should satisfy to guarantee that
 fold-right and fold-left will produce the same values
 for any sequence is __associativity__.
 
-### 2.54
+### 2.53
 ```scheme
 (list 'a 'b 'c)  ;; {a b c}
 (list (list 'george))  ;; {{george}}
