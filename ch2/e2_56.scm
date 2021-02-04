@@ -23,7 +23,9 @@
 (define (multiplicand p) (caddr p))
 ;; Solution
 (define (make-exponentiation b n)
-  (list '** b n))
+  (cond ((=number? n 0) 1)
+        ((=number? n 1) b)
+        (else (list '** b n))))
 (define (exponentiation? x) (and (pair? x) (eq? (car x) '**)))
 (define (base e) (cadr e))
 (define (exponent e) (caddr e))
