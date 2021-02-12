@@ -171,7 +171,7 @@ for any sequence is __associativity__.
 
 ### 2.55
 ```scheme
-(car ''abracadabra)  
+(car ''abracadabra)
 ;; is the same as
 (car (quote (quote abracadabra)))
 ;; (quote (quote x)) is just '(quote x)
@@ -179,3 +179,29 @@ for any sequence is __associativity__.
 ;; so car of that is just the word `quote`.
 ```
 
+### 2.63
+```scheme
+(define (tree->list-1 tree)
+  (if (null? tree)
+      '()
+      (append (tree->list-1 (left-branch tree))
+              (cons (entry tree)
+                    (tree->list-1
+                      (right-branch tree))))))
+
+(define (tree->list-2 tree)
+  (define (copy-to-list tree result-list)
+    (if (null? tree)
+        result-list
+        (copy-to-list (left-branch tree)
+                      (cons (entry tree)
+                            (copy-to-list
+                              (right-branch tree)
+                              result-list)))))
+  (copy-to-list tree '()))
+```
+
+a. Both procedures produce the same result - (1 3 5 7 9 11) - for every tree shown in Figure 2.16.
+
+b. `tree->list-2` grows more slowly than `tree->list-1` because the latter one uses `append` which is O(n), 
+while the first one uses only `cons`, and the procedures are similar otherwise.
